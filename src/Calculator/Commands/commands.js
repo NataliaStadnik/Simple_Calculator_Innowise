@@ -13,6 +13,5 @@ export * from './CustomPowCommand';
 export * from './AddMemoryCommand';
 export * from './SubtractMemoryCommand';
 export * from './PercentCommand';
-export * from './CommaCommand';
 export * from './CustomSqrtCommand';
 export * from './SetCommand';

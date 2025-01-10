@@ -8,8 +8,8 @@ export class Invoker {
     this.command = null;
   }
 
-  add() {
-    this.command = new Inner.AddCommand(this.calculator);
+  add(value) {
+    this.command = new Inner.AddCommand(this.calculator, value);
     this.pushAndExec();
   }
 
@@ -73,11 +73,6 @@ export class Invoker {
     this.pushAndExec();
   }
 
-  comma() {
-    this.command = new Inner.CommaCommand(this.calculator);
-    this.pushAndExec();
-  }
-
   addMemory() {
     this.command = new Inner.AddMemoryCommand(this.calculator);
     this.pushAndExec();
@@ -101,12 +96,12 @@ export class Invoker {
     return this.calculator.cleanMemory();
   }
 
-  reset() {
-    return this.calculator.reset();
+  getCommand() {
+    return this.calculator.getCommand();
   }
 
-  getSecondNumber() {
-    return this.calculator.getSecondNumber();
+  checkState() {
+    return this.calculator.checkState();
   }
 
   setCommand(value) {
@@ -114,8 +109,8 @@ export class Invoker {
     this.pushAndExec();
   }
 
-  getCommand() {
-    return this.calculator.getCommand();
+  reset() {
+    return this.calculator.reset();
   }
 
   pushAndExec() {
@@ -126,12 +121,8 @@ export class Invoker {
   undo() {
     if (this.commands.length !== 0) {
       this.command = this.commands.pop();
-      console.log(this.command);
       this.command.undo();
+      // console.log(this.command);
     }
-  }
-
-  getResult() {
-    return this.calculator.getResult();
   }
 }

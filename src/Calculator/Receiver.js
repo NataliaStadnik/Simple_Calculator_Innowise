@@ -1,40 +1,52 @@
 export class Receiver {
-  _result = 0;
-  _secondNumber = null;
-  _memory = 0;
-  _command = null;
-  _output = '';
-  _isComma = false;
+  _result;
+  _Number;
+  _memory;
+  _command;
+  _output;
 
-  constructor() {}
+  constructor() {
+    this.reset();
+  }
 
   add() {
-    console.log(this._command);
-    this._output = `${this.getResult()} + ${this.getSecondNumber()} = `;
-    this._result += this._secondNumber;
+    if (!this._Number) {
+      return;
+    }
+    this._output = `${this._result} + ${this._Number} = `;
+    this._result += +this._Number.toString().replace(',', '.');
     this._update();
   }
 
   subtract() {
-    this._output = `${this.getResult()} - ${this.getSecondNumber()} = `;
-    this._result -= this._secondNumber;
+    if (!this._Number) {
+      return;
+    }
+    this._output = `${this._result} - ${this._Number} = `;
+    this._result -= +this._Number.toString().replace(',', '.');
     this._update();
   }
 
   divide() {
-    this._output = `${this.getResult()} / ${this.getSecondNumber()} = `;
-    this._result /= this._secondNumber;
+    if (!this._Number) {
+      return;
+    }
+    this._output = `${this._result} / ${this._Number} = `;
+    this._result /= +this._Number.toString().replace(',', '.');
     this._update();
   }
 
   multiply() {
-    this._output = `${this.getResult()} x ${this.getSecondNumber()} = `;
-    this._result *= this._secondNumber;
+    if (!this._Number) {
+      return;
+    }
+    this._output = `${this._result} x ${this._Number} = `;
+    this._result *= +this._Number.toString().replace(',', '.');
     this._update();
   }
 
   reverseSign() {
-    this._output = this.getResult();
+    this._output = this._result;
     if (this._result !== 0) {
       this._result *= -1;
     }
@@ -42,33 +54,33 @@ export class Receiver {
   }
 
   pow(value) {
-    this._output = `${this.getResult()}<sup class="index">${value}</sup> = `;
+    this._output = `${this._result}<sup class="index">${value}</sup> = `;
     this._result = this._result ** value;
     this._update();
   }
 
   pow10() {
-    this._output = `10 <sup class="index">${this.getResult()}</sup> = `;
+    this._output = `10 <sup class="index">${this._result}</sup> = `;
     this._result = 10 ** this._result;
     this._update();
   }
 
   customPow() {
-    this._output = `${this.getResult()}<sup class="index">${this.getSecondNumber()}</sup> = `;
-    this._result = this._result ** this._secondNumber;
+    this._output = `${this._result}<sup class="index">${this._Number}</sup> = `;
+    this._result = this._result ** this._Number;
     this._update();
   }
 
   fractionX() {
-    this._output = `1/${this.getResult()} = `;
+    this._output = `1/${this._result} = `;
     this._result = 1 / this._result;
     this._update();
   }
 
   factorial() {
-    this._output = `${this.getResult()}! = `;
+    this._output = `${this._result}! = `;
     if (this._result < 0 || !Number.isInteger(this._result)) {
-      this._result = 'Не определено';
+      this._result = Infinity;
     } else if (this._result === 0) {
       this._result = 1;
     } else {
@@ -82,63 +94,50 @@ export class Receiver {
   }
 
   sqrt(value) {
-    this._output = `<sup class="index">${value}</sup>&#8730; ${this.getResult()} = `;
+    this._output = `<sup class="index">${value}</sup>&#8730; ${this._result} = `;
     this._result = this._result ** (1 / value);
     this._update();
   }
 
   customSqrt() {
-    this._output = `<sup class="index">${this.getSecondNumber()}</sup>&#8730; ${this.getResult()} = `;
-    this._result = this._result ** (1 / this._secondNumber);
+    this._output = `<sup class="index">${this._Number}</sup>&#8730; ${this._result} = `;
+    this._result = this._result ** (1 / this._Number);
     this._update();
   }
 
   percent() {
-    if (this._secondNumber) {
-      this._secondNumber = (this._result * this._secondNumber) / 100;
+    if (this._Number) {
+      this._Number = (this._result * this._Number) / 100;
     }
-  }
-
-  comma() {
-    if (!this._isComma) {
-      this._secondNumber
-        ? this._setInput(`${this._secondNumber},`)
-        : this._setInput(`${this._result},`);
-      this._isComma = true;
-    }
-  }
-
-  reset() {
-    this._output = '';
-    this._result = 0;
-    this._update();
   }
 
   setNumber(value) {
-    if (this._result === 'Не определено') {
+    if (typeof this._result === 'string' || !this._command) {
       this.reset();
     }
-
-    if (this.getCommand()) {
-      // if (this._isComma) {
-      //   this._setSecondNumber('.' + value.toString());
-      // } else {
-      //   this._setSecondNumber(value);
-      // }
-      this._setSecondNumber(value);
+    if (value === '.' && this._Number.includes('.')) {
       return;
     }
 
-    if (this._result === 0) {
-      this._isComma
-        ? (this._result = '0.' + value.toString())
-        : (this._result = +value);
-    } else {
-      this._isComma
-        ? (this._result = +(this._result.toString() + '.' + value.toString()))
-        : (this._result = +(this._result.toString() + value));
+    if (value === '.' && this._Number === '') {
+      this._Number = '0.';
+      this._setInput(this._Number);
+      return;
     }
-    this._setInput();
+
+    if (value === '0' && this._command === '/') {
+      this._result = Infinity;
+      this._setInput(this.getResult());
+      return;
+    }
+
+    if (value === '0' && this._Number === '') {
+      return;
+    }
+    // fix 0 in second number
+
+    this._Number = `${this._Number}${value}`;
+    this._setInput(this._Number);
   }
 
   getResult() {
@@ -153,84 +152,70 @@ export class Receiver {
   }
 
   setResult(value) {
-    console.log(this._result);
-    console.log(this._command);
-    console.log(this._secondNumber);
     this._result = value;
-    console.log(this._result);
-    console.log(this._command);
-    console.log(this._secondNumber);
-  }
-
-  getSecondNumber() {
-    return this._secondNumber;
   }
 
   addMemory() {
+    this._command = false;
     this._memory += this._result;
   }
 
   subtractMemory() {
+    this._command = false;
     this._memory -= this._result;
   }
 
   readMemory() {
+    this._command = false;
     this._result = this._memory;
-    this._setSecondNumber(null);
-    this._setInput();
+    this._setInput(this.getResult());
+    this._Number = '';
   }
 
   cleanMemory() {
     this._memory = 0;
+    this._command = false;
+  }
+
+  getCommand() {
+    return this._command;
   }
 
   setCommand(value) {
     this._command = value;
   }
 
-  getCommand() {
-    if (this.getResult() === 'Не определено') {
-      this._command = null;
+  checkState() {
+    if (this._result === 'Не определено') {
+      this.reset();
     }
-    return this._command;
   }
 
-  _setSecondNumber(value) {
-    if (this._secondNumber === null || this._secondNumber === 0) {
-      this._secondNumber = +value;
-    } else {
-      this._secondNumber = +(this._secondNumber.toString() + value);
-    }
-    this._setInput(this._secondNumber);
+  reset() {
+    this._result = 0;
+    this._Number = '';
+    this._command = '+';
+    this._output = '';
+    this._setOutput();
+    this._setInput(this._result);
   }
 
-  _setOutput() {
-    const output = document.querySelectorAll('.output');
-    output[0].innerHTML = this._output.toString().replace('.', ',');
+  _update() {
+    this._setInput(this.getResult());
+    this._setOutput();
+    this._Number = '';
   }
 
-  _setInput(value = this.getResult()) {
+  _setInput(value) {
     if (typeof value === 'number') {
       value = +value.toFixed(12);
     }
     const input = document.querySelectorAll('.input');
     input[0].textContent = value.toString().replace('.', ',');
-    if (value === 'Не определено') {
-      this._setOutput('');
-    }
   }
 
-  // _isSecondNumber() {
-  //   return typeof this._secondNumber === 'number';
-  // }
-
-  _update() {
-    if (this._secondNumber) {
-      this._secondNumber = null;
-    }
-    this._command = null;
-    this._setOutput();
-    this._setInput();
-    this._isComma = false;
+  _setOutput() {
+    const output = document.querySelectorAll('.output');
+    output[0].innerHTML = this._output.toString().replace('.', ',');
   }
 }
