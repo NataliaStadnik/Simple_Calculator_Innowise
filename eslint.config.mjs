@@ -4,7 +4,7 @@ import jest from 'eslint-plugin-jest';
 import eslintConfigPrettier from 'eslint-config-prettier';
 
 export default [
-   pluginJs.configs.recommended,
+  pluginJs.configs.recommended,
   eslintConfigPrettier,
   {
     languageOptions: {
@@ -29,5 +29,4 @@ export default [
   {
     ignores: ['dist/'],
   },
-
 ];
