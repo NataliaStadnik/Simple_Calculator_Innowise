@@ -122,7 +122,7 @@ export class Invoker {
     if (this.commands.length !== 0) {
       this.command = this.commands.pop();
       this.command.undo();
-      // console.log(this.command);
+      console.log(this.command);
     }
   }
 }

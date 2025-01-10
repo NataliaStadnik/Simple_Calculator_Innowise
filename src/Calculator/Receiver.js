@@ -1,3 +1,5 @@
+import * as mth from './utilits';
+
 export class Receiver {
   _result;
   _Number;
@@ -10,105 +12,87 @@ export class Receiver {
   }
 
   add() {
-    if (!this._Number) {
-      return;
+    if (this._Number) {
+      this._output = `${this._result} + ${this._Number} = `;
+      this._result = mth.add(this._result, this._updateNumber());
+      this._update();
     }
-    this._output = `${this._result} + ${this._Number} = `;
-    this._result += +this._Number.toString().replace(',', '.');
-    this._update();
   }
 
   subtract() {
-    if (!this._Number) {
-      return;
+    if (this._Number) {
+      this._output = `${this._result} - ${this._Number} = `;
+      this._result = mth.subtr(this._result, this._updateNumber());
+      this._update();
     }
-    this._output = `${this._result} - ${this._Number} = `;
-    this._result -= +this._Number.toString().replace(',', '.');
-    this._update();
   }
 
   divide() {
-    if (!this._Number) {
-      return;
+    if (this._Number) {
+      this._output = `${this._result} / ${this._Number} = `;
+      this._result = mth.divide(this._result, this._updateNumber());
+      this._update();
     }
-    this._output = `${this._result} / ${this._Number} = `;
-    this._result /= +this._Number.toString().replace(',', '.');
-    this._update();
   }
 
   multiply() {
-    if (!this._Number) {
-      return;
+    if (this._Number) {
+      this._output = `${this._result} x ${this._Number} = `;
+      this._result = mth.multiply(this._result, this._updateNumber());
+      this._update();
     }
-    this._output = `${this._result} x ${this._Number} = `;
-    this._result *= +this._Number.toString().replace(',', '.');
-    this._update();
   }
 
   reverseSign() {
     this._output = this._result;
-    if (this._result !== 0) {
-      this._result *= -1;
-    }
+    this._result = mth.reverse(this._result);
     this._update();
   }
 
   pow(value) {
     this._output = `${this._result}<sup class="index">${value}</sup> = `;
-    this._result = this._result ** value;
+    this._result = mth.pow(this._result, value);
     this._update();
   }
 
   pow10() {
     this._output = `10 <sup class="index">${this._result}</sup> = `;
-    this._result = 10 ** this._result;
+    this._result = mth.pow(10, this._result);
     this._update();
   }
 
   customPow() {
     this._output = `${this._result}<sup class="index">${this._Number}</sup> = `;
-    this._result = this._result ** this._Number;
+    this._result = mth.pow(this._result, this._Number);
     this._update();
   }
 
   fractionX() {
     this._output = `1/${this._result} = `;
-    this._result = 1 / this._result;
+    this._result = mth.fraction(this._result);
     this._update();
   }
 
   factorial() {
     this._output = `${this._result}! = `;
-    if (this._result < 0 || !Number.isInteger(this._result)) {
-      this._result = Infinity;
-    } else if (this._result === 0) {
-      this._result = 1;
-    } else {
-      let start = 1;
-      for (let i = 2; i <= this._result; i++) {
-        start *= i;
-      }
-      this._result = start;
-    }
+    this._result = mth.factorial(this._result);
     this._update();
   }
 
   sqrt(value) {
     this._output = `<sup class="index">${value}</sup>&#8730; ${this._result} = `;
-    this._result = this._result ** (1 / value);
+    this._result = mth.sqrt(this._result, value);
     this._update();
   }
 
   customSqrt() {
     this._output = `<sup class="index">${this._Number}</sup>&#8730; ${this._result} = `;
-    this._result = this._result ** (1 / this._Number);
+    this._result = mth.sqrt(this._result, this._Number);
     this._update();
   }
 
   percent() {
-    if (this._Number) {
-      this._Number = (this._result * this._Number) / 100;
-    }
+    this._Number = mth.percent(this._Number, this._result);
   }
 
   setNumber(value) {
@@ -217,5 +201,9 @@ export class Receiver {
   _setOutput() {
     const output = document.querySelectorAll('.output');
     output[0].innerHTML = this._output.toString().replace('.', ',');
+  }
+
+  _updateNumber() {
+    return +this._Number.toString().replace(',', '.');
   }
 }

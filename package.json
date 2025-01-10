@@ -7,7 +7,7 @@
     "lint": "eslint './'",
     "lint:fix": "eslint './' --fix",
     "prepare": "husky install",
-    "test": "echo \"No test specified\""
+    "test": "jest"
   },
   "author": "Natalia Stadnik",
   "devDependencies": {
