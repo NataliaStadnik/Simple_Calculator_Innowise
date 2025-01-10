@@ -1,0 +1,171 @@
+.wrapper {
+  border-radius: 15px;
+  box-shadow: rgba(99, 99, 99, 0.6) 2px 4px 11px 3px;
+  background-color: var(--wrapper);
+  overflow: hidden;
+}
+
+.input,
+.output {
+  width: 100%;
+  min-height: 55px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  padding: 10px 20px;
+  font-size: 34px;
+  word-break: break-all;
+}
+
+.input {
+  color: var(--input-color);
+}
+
+.output {
+  color: var(--output-color);
+  font-size: 25px;
+}
+
+.buttons-wrapper {
+  display: flex;
+}
+
+.row {
+  display: flex;
+}
+
+.btn {
+  height: 60px;
+  width: 80px;
+  border: 1px solid var(--border-btn);
+  transition: background-color .1s ease-in;
+}
+
+.btn--zero {
+  width: 160px;
+}
+
+.btn:nth-child(5) {
+  border-bottom-right-radius: 15px;
+}
+
+.numbers {
+  background-color: var(--numbers-btn);
+}
+
+.settings {
+  display: flex;
+  background-color: var(--settings-btn);
+}
+
+.math {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--settings-btn);
+}
+
+.math__upper,
+.math__bottom {
+  display: flex;
+}
+
+.math .row {
+  flex-direction: column;
+}
+
+.index {
+  font-size: 17px;
+  line-height: 23px;
+  vertical-align: text-top;
+}
+
+.buttons-wrapper__right {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--signs-btn);
+}
+
+.calculator-header {
+  display: flex;
+  gap: 10px;
+  padding: 10px;
+}
+
+.btn-tool {
+  position: relative;
+  width: 19px;
+  height: 19px;
+  border-radius: 30px;
+}
+
+.btn-tool--red {
+  background-color: red;
+}
+
+.btn-tool--red::before,
+.btn-tool--red::after {
+  width: 11px;
+  height: 1px;
+  content: "";
+  position: absolute;
+  top: 9px;
+  left: 4px;
+  background-color: rgb(74, 74, 74);
+  transition: opacity .1s ease-in;
+}
+
+.btn-tool--red::before {
+  transform: rotate(45deg);
+}
+
+.btn-tool--red::after {
+  transform: rotate(-45deg);
+}
+
+.btn-tool--yellow {
+  background-color: yellow;
+}
+
+.btn-tool--yellow::before {
+  width: 11px;
+  height: 1px;
+  content: "";
+  position: absolute;
+  top: 9px;
+  left: 4px;
+  background-color: rgb(74, 74, 74);
+  transition: transform .1s ease-in;
+}
+
+.btn-tool--green {
+  background-color: greenyellow;
+}
+
+.btn-tool--green::after {
+  content: '\21C5';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  line-height: 16px;
+  font-size: 15px;
+  color: rgb(74, 74, 74);
+}
+
+.btn-tool--red:hover:not(:disabled),
+.btn-tool--yellow:hover:not(:disabled),
+.btn-tool--green:hover:not(:disabled) {
+  transform: scale(110%);
+}
+
+.btn-tool:disabled {
+  cursor: initial;
+  opacity: .4;
+}
+
+.btn:active {
+  background-color: var(--click);
+}
+
+.btn-fact {
+  width: 160px;
+}
