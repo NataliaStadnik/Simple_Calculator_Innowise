@@ -3,9 +3,9 @@ import * as mth from './utilits';
 export class Receiver {
   _result;
   _Number;
-  _memory;
   _command;
   _output;
+  _memory = 0;
 
   constructor() {
     this.reset();
@@ -56,9 +56,7 @@ export class Receiver {
   }
 
   pow10() {
-    this._output = `10 <sup class="index">${this._result}</sup> = `;
-    this._result = mth.pow(10, this._result);
-    this._update();
+    this.pow(10);
   }
 
   customPow() {
@@ -92,7 +90,9 @@ export class Receiver {
   }
 
   percent() {
-    this._Number = mth.percent(this._Number, this._result);
+    if (this._result !== 0) {
+      this._Number = mth.percent(this._Number, this._result);
+    }
   }
 
   setNumber(value) {
@@ -115,9 +115,9 @@ export class Receiver {
       return;
     }
 
-    if (value === '0' && this._Number === '') {
-      return;
-    }
+    // if (value === '0' && this._Number === '') {
+    //   return;
+    // }
     // fix 0 in second number
 
     this._Number = `${this._Number}${value}`;
@@ -140,17 +140,14 @@ export class Receiver {
   }
 
   addMemory() {
-    this._command = false;
     this._memory += this._result;
   }
 
   subtractMemory() {
-    this._command = false;
     this._memory -= this._result;
   }
 
   readMemory() {
-    this._command = false;
     this._result = this._memory;
     this._setInput(this.getResult());
     this._Number = '';
@@ -158,7 +155,6 @@ export class Receiver {
 
   cleanMemory() {
     this._memory = 0;
-    this._command = false;
   }
 
   getCommand() {
@@ -200,7 +196,7 @@ export class Receiver {
 
   _setOutput() {
     const output = document.querySelectorAll('.output');
-    output[0].innerHTML = this._output.toString().replace('.', ',');
+    output[0].innerHTML = this._output.toString().replaceAll('.', ',');
   }
 
   _updateNumber() {
