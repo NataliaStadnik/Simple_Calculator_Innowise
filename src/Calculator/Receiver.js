@@ -99,7 +99,11 @@ export class Receiver {
     if (typeof this._result === 'string' || !this._command) {
       this.reset();
     }
-    if (value === '.' && this._Number.includes('.')) {
+    if (
+      (value === '.' && this._Number.includes('.')) ||
+      (value === '0' && this._result === 0 && !this._Number) ||
+      (value === '0' && this._Number === '0')
+    ) {
       return;
     }
 
@@ -114,11 +118,6 @@ export class Receiver {
       this._setInput(this.getResult());
       return;
     }
-
-    // if (value === '0' && this._Number === '') {
-    //   return;
-    // }
-    // fix 0 in second number
 
     this._Number = `${this._Number}${value}`;
     this._setInput(this._Number);

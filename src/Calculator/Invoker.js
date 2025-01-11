@@ -8,8 +8,8 @@ export class Invoker {
     this.command = null;
   }
 
-  add(value) {
-    this.command = new Inner.AddCommand(this.calculator, value);
+  add() {
+    this.command = new Inner.AddCommand(this.calculator);
     this.pushAndExec();
   }
 
