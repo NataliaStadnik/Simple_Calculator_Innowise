@@ -121,7 +121,7 @@ export class Invoker {
   undo() {
     if (this.commands.length !== 0) {
       this.command = this.commands.pop();
-      this.command.undo(this);
+      this.command.undo();
     }
   }
 }

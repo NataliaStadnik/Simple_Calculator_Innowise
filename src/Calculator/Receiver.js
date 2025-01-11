@@ -1,15 +1,14 @@
 import * as mth from './utilits';
 
 export class Receiver {
-  _result;
-  _Number;
-  _command;
-  _output;
+  _result = 0;
+  _Number = '';
+  _command = '+';
+  _output = '';
   _memory = 0;
+  _first = true;
 
-  constructor() {
-    this.reset();
-  }
+  constructor() {}
 
   add() {
     if (this._Number) {
@@ -195,7 +194,12 @@ export class Receiver {
 
   _setOutput() {
     const output = document.querySelectorAll('.output');
-    output[0].innerHTML = this._output.toString().replaceAll('.', ',');
+    if (this._first) {
+      output[0].textContent = this._result;
+      this._first = false;
+    } else {
+      output[0].innerHTML = this._output.toString().replaceAll('.', ',');
+    }
   }
 
   _updateNumber() {
