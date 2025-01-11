@@ -8,8 +8,8 @@ export class Invoker {
     this.command = null;
   }
 
-  add(value) {
-    this.command = new Inner.AddCommand(this.calculator, value);
+  add() {
+    this.command = new Inner.AddCommand(this.calculator);
     this.pushAndExec();
   }
 
@@ -85,7 +85,7 @@ export class Invoker {
 
   setNumber(value) {
     this.command = new Inner.SetNumberCommand(this.calculator, value);
-    this.pushAndExec();
+    this.command.execute();
   }
 
   readMemory() {
@@ -106,7 +106,7 @@ export class Invoker {
 
   setCommand(value) {
     this.command = new Inner.SetCommand(this.calculator, value);
-    this.pushAndExec();
+    this.command.execute();
   }
 
   reset() {
@@ -121,7 +121,7 @@ export class Invoker {
   undo() {
     if (this.commands.length !== 0) {
       this.command = this.commands.pop();
-      this.command.undo(this);
+      this.command.undo();
     }
   }
 }

@@ -1,15 +1,14 @@
 import * as mth from './utilits';
 
 export class Receiver {
-  _result;
-  _Number;
-  _command;
-  _output;
+  _result = 0;
+  _Number = '';
+  _command = '+';
+  _output = '';
   _memory = 0;
+  _first = true;
 
-  constructor() {
-    this.reset();
-  }
+  constructor() {}
 
   add() {
     if (this._Number) {
@@ -99,7 +98,11 @@ export class Receiver {
     if (typeof this._result === 'string' || !this._command) {
       this.reset();
     }
-    if (value === '.' && this._Number.includes('.')) {
+    if (
+      (value === '.' && this._Number.includes('.')) ||
+      (value === '0' && this._result === 0 && !this._Number) ||
+      (value === '0' && this._Number === '0')
+    ) {
       return;
     }
 
@@ -115,11 +118,6 @@ export class Receiver {
       return;
     }
 
-    // if (value === '0' && this._Number === '') {
-    //   return;
-    // }
-    // fix 0 in second number
-
     this._Number = `${this._Number}${value}`;
     this._setInput(this._Number);
   }
@@ -133,10 +131,6 @@ export class Receiver {
       this._result = 'Не определено';
     }
     return this._result;
-  }
-
-  setResult(value) {
-    this._result = value;
   }
 
   addMemory() {
@@ -178,6 +172,7 @@ export class Receiver {
     this._output = '';
     this._setOutput();
     this._setInput(this._result);
+    this._first = true;
   }
 
   _update() {
@@ -196,10 +191,38 @@ export class Receiver {
 
   _setOutput() {
     const output = document.querySelectorAll('.output');
-    output[0].innerHTML = this._output.toString().replaceAll('.', ',');
+    if (this._first) {
+      output[0].textContent = this._result;
+      this._first = false;
+    } else {
+      output[0].innerHTML = this._output.toString().replaceAll('.', ',');
+    }
   }
 
   _updateNumber() {
     return +this._Number.toString().replace(',', '.');
+  }
+
+  setSnapshot(value) {
+    [
+      this._result,
+      this._Number,
+      this._command,
+      this._output,
+      this._memory,
+      this._first,
+    ] = value;
+    this._update();
+  }
+
+  getSnapshot() {
+    return [
+      this.getResult(),
+      this._Number,
+      this._command,
+      this._output,
+      this._memory,
+      this._first,
+    ];
   }
 }

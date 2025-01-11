@@ -1,7 +1,7 @@
 export class DivideCommand {
   constructor(calculator) {
     this.calculator = calculator;
-    this.undoResult = calculator.getResult();
+    this.undoResult = calculator.getSnapshot();
   }
 
   execute() {
@@ -9,6 +9,6 @@ export class DivideCommand {
   }
 
   undo() {
-    this.calculator.setResult(this.undoResult);
+    this.calculator.setSnapshot(this.undoResult);
   }
 }
