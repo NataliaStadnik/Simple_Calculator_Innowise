@@ -32,6 +32,9 @@ export class Client {
             this.execute(command);
             this.invoker.setCommand(false);
             break;
+          case 'delete':
+            this.invoker.setCommand('delete');
+            this.execute('delete');
         }
       });
     });
@@ -96,7 +99,6 @@ export class Client {
       case 'mc':
         this.invoker.cleanMemory();
         break;
-
       case 'delete':
         this.invoker.undo();
         break;

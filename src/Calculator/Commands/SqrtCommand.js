@@ -2,7 +2,7 @@ export class SqrtCommand {
   constructor(calculator, value) {
     this.calculator = calculator;
     this.value = value;
-    this.undoResult = calculator.getResult();
+    this.undoResult = calculator.getSnapshot();
   }
 
   execute() {
@@ -10,6 +10,6 @@ export class SqrtCommand {
   }
 
   undo() {
-    this.calculator.setResult(this.undoResult);
+    this.calculator.setSnapshot(this.undoResult);
   }
 }

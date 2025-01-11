@@ -85,7 +85,7 @@ export class Invoker {
 
   setNumber(value) {
     this.command = new Inner.SetNumberCommand(this.calculator, value);
-    this.pushAndExec();
+    this.command.execute();
   }
 
   readMemory() {
@@ -106,7 +106,7 @@ export class Invoker {
 
   setCommand(value) {
     this.command = new Inner.SetCommand(this.calculator, value);
-    this.pushAndExec();
+    this.command.execute();
   }
 
   reset() {

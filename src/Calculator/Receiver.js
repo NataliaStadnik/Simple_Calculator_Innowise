@@ -133,10 +133,6 @@ export class Receiver {
     return this._result;
   }
 
-  setResult(value) {
-    this._result = value;
-  }
-
   addMemory() {
     this._memory += this._result;
   }
@@ -176,6 +172,7 @@ export class Receiver {
     this._output = '';
     this._setOutput();
     this._setInput(this._result);
+    this._first = true;
   }
 
   _update() {
@@ -204,5 +201,28 @@ export class Receiver {
 
   _updateNumber() {
     return +this._Number.toString().replace(',', '.');
+  }
+
+  setSnapshot(value) {
+    [
+      this._result,
+      this._Number,
+      this._command,
+      this._output,
+      this._memory,
+      this._first,
+    ] = value;
+    this._update();
+  }
+
+  getSnapshot() {
+    return [
+      this.getResult(),
+      this._Number,
+      this._command,
+      this._output,
+      this._memory,
+      this._first,
+    ];
   }
 }
