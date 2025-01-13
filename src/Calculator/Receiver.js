@@ -1,4 +1,5 @@
 import * as mth from './utilits';
+export const CALCULATION_ERROR_MESSAGE = 'Не определено';
 
 export class Receiver {
   _result = 0;
@@ -128,7 +129,7 @@ export class Receiver {
       this._result === -Infinity ||
       isNaN(this._result)
     ) {
-      this._result = 'Не определено';
+      this._result = CALCULATION_ERROR_MESSAGE;
     }
     return this._result;
   }
@@ -160,7 +161,7 @@ export class Receiver {
   }
 
   checkState() {
-    if (this._result === 'Не определено') {
+    if (this._result === CALCULATION_ERROR_MESSAGE) {
       this.reset();
     }
   }
