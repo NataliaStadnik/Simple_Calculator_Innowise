@@ -1,0 +1,85 @@
+.modal {
+  position: absolute;
+  display: flex;
+  justify-content: space-between;
+  content: '';
+  width: 0;
+  height: 0;
+  padding: 10px;
+  top: 15%;
+  box-shadow: rgba(99, 99, 99, 0.2) 2px 2px 11px 3px;
+  background-color: #fff;
+  border-radius: 10px;
+  animation-duration: .7s;
+  animation-fill-mode: forwards;
+  animation-name: modal-rise;
+}
+
+@keyframes modal-rise {
+  from {
+    width: 50px;
+    height: 50px;
+    opacity: 0;
+  }
+
+  to {
+    width: 250px;
+    height: 45px;
+    opacity: 1;
+  }
+}
+
+.modal--close {
+  animation-duration: .7s;
+  animation-name: modal-close;
+}
+
+@keyframes modal-close {
+  from {
+    width: 250px;
+    height: 45px;
+    opacity: 1;
+  }
+
+  to {
+    width: 0;
+    height: 45px;
+    opacity: 0;
+  }
+}
+
+.theme {
+  width: 25px;
+  height: 25px;
+  border-radius: 30px;
+  box-shadow: rgba(99, 99, 99, 0.3) 0px 0px 7px 1px;
+  transition: outline .2s ease-in;
+}
+
+.theme--black {
+  background-color: rgb(21 21 21);
+}
+
+.theme--blue {
+  background-color: rgb(68 97 175);
+}
+
+.theme--green {
+  background-color: #81c89a;
+}
+
+.theme--purple {
+  background-color: rgb(200 129 255);
+}
+
+.theme--white {
+  background-color: #fff;
+}
+
+.theme--orange {
+  background-color: rgb(255 185 117 / 72%);
+}
+
+.theme:hover {
+  outline: 1px solid rgb(134, 133, 133);
+}
